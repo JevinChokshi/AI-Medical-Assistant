@@ -1,0 +1,24 @@
+fastapi
+uvicorn[standard]
+python-multipart
+
+langchain
+langchain-community
+langchain-core
+langchain-groq
+langchain-google-genai
+langchain-huggingface
+torch
+sentence-transformers
+
+pinecone
+
+PyPDF
+python-dotenv
+pydantic
+requests
+tqdm
+
+loguru
+
+# uv pip install -r requirements.txt
