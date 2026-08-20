@@ -6,10 +6,8 @@ langchain
 langchain-community
 langchain-core
 langchain-groq
-langchain-google-genai
 langchain-huggingface
-torch
-sentence-transformers
+
 
 pinecone
 
