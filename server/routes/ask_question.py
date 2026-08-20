@@ -4,14 +4,15 @@ from modules.llm import get_llm_chain
 from modules.query_handlers import query_chain
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
-# from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from pinecone import Pinecone
 from pydantic import Field
 from typing import List, Optional
 from logger import logger
 import os
 import re
+
+
 
 def clean_think_tags(text: str) -> str:
     """Removes leaked <think>...</think> reasoning tags from LLM outputs."""
@@ -36,7 +37,7 @@ async def ask_question(question:str = Form(...)):
         pc=Pinecone(os.environ["PINECONE_API_KEY"])
         index=pc.index(os.environ["PINECONE_INDEX_NAME"])
 
-        embed_model=HuggingFaceEmbeddings(model_name="BAAI/bge-base-en-v1.5", model_kwargs={'device': 'cpu'}, encode_kwargs={'normalize_embeddings': True}) #GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
+        embed_model = HuggingFaceEndpointEmbeddings(model="BAAI/bge-base-en-v1.5", huggingfacehub_api_token=os.environ['HF_TOKEN'])
         embedded_query=embed_model.embed_query(question)
 
         res=index.query(vector=embedded_query, top_k=3, include_metadata=True)
